@@ -11,7 +11,7 @@ Keep using CodeIgniter [Language Class](https://codeigniter.com/user_guide/libra
 
 View
 
-    <p><?php echo lang('I'm a man')?></p>
+    <p><?php echo lang('I\'m a man')?></p>
 English language file
 
     $lang['I\'m a man'] = "I'm a man";
@@ -81,7 +81,7 @@ Let's build a bilingual English/Arabic page.
 
 `application/views/about.php`
 
-    <p><?php echo lang('I'm a man')?></p>
+    <p><?php echo lang('I\'m a man')?></p>
  
 ### Test
 
