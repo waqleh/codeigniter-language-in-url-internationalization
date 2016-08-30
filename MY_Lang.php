@@ -1,36 +1,56 @@
 <?php
 
-
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * Language in URL for CodeIgniter.
  *
  * @author		Walid Aqleh <waleedakleh23@hotmail.com>
- * @version		1.0.0
+ * @version		1.1.1
  * @based on	        Internationalization (i18n) library for CodeIgniter 2 by Jerome Jaglale (http://jeromejaglale.com/doc/php/codeigniter_i18n)
  * @link https://github.com/waqleh/CodeIgniter-Language-In-URL-Internationalization-
  */
-
 class MY_Lang extends CI_Lang {
-    /*     * ************************************************
-      configuration
-     * ************************************************* */
+    /**
+     * configuration (you can move these into a config file or get it from a database)
+     */
 
-    // languages
-    var $languages = array(
+    /**
+     * languages
+     *
+     * @var array
+     */
+    public $languages = array(
         'en' => 'english',
         'ar' => 'arabic'
     );
-    // special URIs (not localized)
-    var $special = array(
+
+    /**
+     * special URIs (not localized)
+     *
+     * @var array
+     */
+    public $special = array(
         ""
     );
-    // where to redirect if no language in URI
-    var $default_uri = '';
 
-    /*     * *********************************************** */
+    /**
+     * where to redirect if no language in URI
+     *
+     * @var string
+     */
+    public $default_uri = '';
 
+    // --------------------------------------------------------------------
+
+    /**
+     * Class constructor
+     *
+     * If URI without language then Add language current URI and redirect
+     * If URI is special don't add language to URI
+     *
+     * @return	void
+     */
     function __construct() {
         parent::__construct();
 
@@ -59,8 +79,11 @@ class MY_Lang extends CI_Lang {
         }
     }
 
-    // get current language
-    // ex: return 'en' if language in CI config is 'english' 
+    /**
+     * Returns the current language
+     *
+     * @return  string ex: return 'en' if language in CI config is 'english'
+     */
     function lang() {
         global $CFG;
         $language = $CFG->item('language');
@@ -73,6 +96,12 @@ class MY_Lang extends CI_Lang {
         return NULL; // this should not happen
     }
 
+    /**
+     * Check if URI is special URIs (not localized)
+     *
+     * @param   string  $uri    URI
+     * @return  boolean TRUE if special Or FALSE if not
+     */
     function is_special($uri) {
         $exploded = explode('/', $uri);
         if (in_array($exploded[0], $this->special)) {
@@ -84,6 +113,12 @@ class MY_Lang extends CI_Lang {
         return FALSE;
     }
 
+    /**
+     * Switch to another language
+     *
+     * @param   string  $lang    Language key
+     * @return  string URI
+     */
     function switch_uri($lang) {
         $CI = & get_instance();
 
@@ -96,7 +131,12 @@ class MY_Lang extends CI_Lang {
         return $uri;
     }
 
-    // is there a language segment in this $uri?
+    /**
+     * Check if there is a language segment in this $uri?
+     *
+     * @param   string  $uri    URI
+     * @return  boolean TRUE on success or FALSE on failure
+     */
     function has_language($uri) {
         $first_segment = NULL;
 
@@ -116,14 +156,23 @@ class MY_Lang extends CI_Lang {
         return FALSE;
     }
 
-    // default language: first element of $this->languages
+    /**
+     * return default language: first element of $this->languages
+     *
+     * @return  string Key of first element in $this->languages
+     */
     function default_lang() {
         foreach ($this->languages as $lang => $language) {
             return $lang;
         }
     }
 
-    // add language segment to $uri (if appropriate)
+    /**
+     * add language segment to $uri (if appropriate)
+     *
+     * @param   string  $uri URI
+     * @return  string  URI
+     */
     function localized($uri) {
         if ($this->has_language($uri) || $this->is_special($uri) || preg_match('/(.+)\.[a-zA-Z0-9]{2,4}$/', $uri)) {
             // we don't need a language segment because:
@@ -131,15 +180,20 @@ class MY_Lang extends CI_Lang {
             // - it's a special uri (set in $special) or
             // - that's a link to a file
         } else {
-            // WALID AQLEH Jun 14 2015
             $uri = $this->lang() . (0 !== strpos($uri, '/') ? '/' : '') . $uri;
         }
 
         return $uri;
     }
 
-    // WALID AQLEH May 14 2015
-    function line($line = '', $log_errors = true) {
+    /**
+     * return translation of line (key). If line is not available add it to a general language file
+     *
+     * @param   string  $uri    URI
+     * @param   boolean Optional parameters to stop logging unfound lines
+     * @return  string
+     */
+    function line($line = '', $log_errors = TRUE) {
         $value = ($line == '' OR ! isset($this->language[$line])) ? FALSE : $this->language[$line];
         if ($value === FALSE) {
             global $CFG;
@@ -153,6 +207,11 @@ class MY_Lang extends CI_Lang {
         return $value;
     }
 
+    /**
+     * create a language file
+     *
+     * @param   string  $file   path of language file
+     */
     function create_lang_file($file) {
         try {
             file_put_contents($file, "<?php
@@ -163,10 +222,16 @@ class MY_Lang extends CI_Lang {
         }
     }
 
+    /**
+     * add line to language file array
+     *
+     * @param   string  $file   path of language file
+     * @param   string  $line   line (key) to add to file
+     */
     function add_to_lang_file($file, $line) {
         try {
             $file_contents = file_get_contents($file);
-            $pattern = '~\$lang\[(\'|")' . $line . '(\'|")\]~';
+            $pattern = '~\$lang\[(\'|")' . preg_quote($line) . '(\'|")\]~';
             if (!preg_match($pattern, $file_contents)) {
                 $data = '$lang[\'' . addcslashes($line, '\'') . '\'] = "' . addcslashes($line, '"') . '";';
                 file_put_contents($file, PHP_EOL . $data, FILE_APPEND);
@@ -270,10 +335,14 @@ class MY_Lang extends CI_Lang {
         log_message('info', 'Language file loaded: language/' . $idiom . '/' . $langfile);
         return TRUE;
     }
-    
-    public function get_lang(){
-        return $this->languages ;
+
+    /**
+     * return languages array
+     *
+     * @return  array
+     */
+    public function get_lang() {
+        return $this->languages;
     }
 
-    // --------------------------------------------------------------------
 }
