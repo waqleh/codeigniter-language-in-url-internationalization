@@ -18,10 +18,10 @@ English language file
 Arabic language file
 
     $lang['I\'m a man'] = "انا رجل";
-Result with maestric.com/en/about
+Result with jorider.com/en/about
 
     <p>I'm a man</p>
-Result with maestric.com/ar/about
+Result with jorider.com/ar/about
 
     <p>انا رجل</p>
 
@@ -47,13 +47,13 @@ Let's build a bilingual English/Arabic page.
 `application/language/english/about_lang.php`
 
     <?php
- 
+
     $lang['I\'m a man'] = "I'm a man";
- 
+
 `application/language/arabic/about_lang.php`
 
     <?php
- 
+
     $lang['I\'m a man'] = "انا رجل";
 
 ### controller
@@ -62,17 +62,17 @@ Let's build a bilingual English/Arabic page.
 
     <?php
     class About extends CI_Controller {
-     
+
     	function index()
     	{
     		// you might want to just autoload these two helpers
     		$this->load->helper('language');
     		$this->load->helper('url');
-     
+
     		// load language file
     		$this->lang->load('about');
-     
-     
+
+
     		$this->load->view('about');
     	}
     }
@@ -82,17 +82,17 @@ Let's build a bilingual English/Arabic page.
 `application/views/about.php`
 
     <p><?php echo lang('I\'m a man')?></p>
- 
+
 ### Test
 
 `http://your_base_url/en/about`
 
     <p>I'm a man</p>
- 
+
 `http://your_base_url/ar/about`
 
     <p>انا رجل</p>
- 
+
 # Notes
 - You might need to translate some of CodeIgniter's language files in system/language. Example: if you're using the “Form Validation” library for Arabic pages, translate `system/language/english/form_validation_lang.php` to `application/language/arabic/form_validation_lang.php`.
 
@@ -100,8 +100,8 @@ Let's build a bilingual English/Arabic page.
 
     site_url('about/my_work');
     // http://mywebsite.com/en/about/my_work
- 
- 
+
+
     base_url('css/styles.css');
     // http://mywebsite.com/css/styles.css
 
@@ -122,14 +122,14 @@ Let's build a bilingual English/Arabic page.
 If line('xyz') is not available strings_lang.php` will be created and will contain:
 
     <?php
-    
+
     defined('BASEPATH') OR exit('No direct script access allowed');
-    
+
     $lang['xyz'] = "xyz";
 
 
 
-# Options 
+# Options
 ### Special URIs
 
 A special URI is not prefixed by a language. The root URI (/) is by default a special URI.
@@ -160,7 +160,7 @@ the default language is the first item of the $languages array
 `application/config/routes.php`: add new routes
 
     // example: German (de)
-    $route['^de/(.+)$'] = "$1"; 
+    $route['^de/(.+)$'] = "$1";
     $route['^(en|ar|de)$'] = $route['default_controller'];
 
 - create corresponding language folder in application/language. For this “German” example, it would be called German.
