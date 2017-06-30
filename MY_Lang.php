@@ -17,22 +17,23 @@ class MY_Lang extends CI_Lang {
 
     /**
      * languages
+     * default language is the first element
      *
      * @var array
      */
-    public $languages = array(
+    public $languages = [
         'en' => 'english',
         'ar' => 'arabic'
-    );
+    ];
 
     /**
      * special URIs (not localized)
      *
      * @var array
      */
-    public $special = array(
+    public $special = [
         ""
-    );
+    ];
 
     /**
      * where to redirect if no language in URI
