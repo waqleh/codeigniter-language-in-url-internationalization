@@ -1,3 +1,5 @@
+*Read this in other languages: [English](README.md), [عربى](README.ar.md).*
+
 # What it does
 
 Language in URL:
