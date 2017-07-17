@@ -31,6 +31,17 @@ jorider.com/ar/about
 
     <p>انا رجل</p>
 
+# موضوعات مهمة
+
+لن تكون قادرا على معرفة كيفية استخدام هذه المكتبة دون معرفة كيف يعمل    
+
+Language Class  
+
+  
+  كوداجنيتر
+
+https://codeigniter.com/user_guide/libraries/language.html#language-class
+
 # التركيب
 
 - (clone) استنساخ المستودع
