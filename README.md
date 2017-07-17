@@ -27,6 +27,10 @@ Result with jorider.com/ar/about
 
     <p>انا رجل</p>
 
+# Important topics:
+You will not be able to figur out how to use this library without knowing how CI Language Class works
+https://codeigniter.com/user_guide/libraries/language.html#language-class
+
 # Installation
 
 - Clone repository
