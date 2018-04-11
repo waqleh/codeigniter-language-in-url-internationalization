@@ -1,6 +1,6 @@
 Read this in other languages:
-- [English](README.md);
-- [عربى](README.ar.md).
+- [English](README.md)
+- [عربى](README.ar.md)
 
 # What it does
 
