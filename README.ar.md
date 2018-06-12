@@ -62,6 +62,12 @@ application/config/routes.php
     $route['^ar/(.+)$'] = "$1";
     // '/en' and '/ar' -> use default controller
     $route['^(en|ar)$'] = $route['default_controller'];
+    
+أمثلة أخرى:
+
+    $route['^(en|fr)/contact'] = "pages/contact";
+    $route['^(en|ar)/privacy-policy$'] = "pages/index/privacy_policy";
+    $route['^(en|ar)/terms-of-use$'] = "pages/index/terms_of_use";
 
 # استعمال
 دعنا نبني صفحة ثنائية اللغة الإنجليزية / العربية.
