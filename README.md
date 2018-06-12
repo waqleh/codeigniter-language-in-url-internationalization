@@ -38,6 +38,8 @@ Before using this library, please read and learn about the [CodeIgniter Language
 - Clone repository;
 - Place the `MY_Lang.php` and `MY_Config.php` files together in the `application/core` folder.
 
+# Example of bilingual English/Arabic website:
+
 ## Configuration
 
 In _application/config/routes.php_ add:
@@ -47,8 +49,12 @@ In _application/config/routes.php_ add:
     $route['^ar/(.+)$'] = "$1";
     // '/en' and '/ar' -> use default controller
     $route['^(en|ar)$'] = $route['default_controller'];
+    
+Other routing examples:
 
-For building a bilingual English/Arabic page:
+    $route['^(en|fr)/contact'] = "pages/contact";
+    $route['^(en|ar)/privacy-policy$'] = "pages/index/privacy_policy";
+    $route['^(en|ar)/terms-of-use$'] = "pages/index/terms_of_use";
 
 ### Create _Language Files_
 
