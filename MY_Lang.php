@@ -198,7 +198,7 @@ class MY_Lang extends CI_Lang {
         $value = ($line == '' OR ! isset($this->language[$line])) ? FALSE : $this->language[$line];
         if ($value === FALSE) {
             global $CFG;
-            $file = APPPATH . 'language/' . $this->languages[$this->lang()] . '/' . $CFG->item('general_lang_file');
+            $file = APPPATH . 'language' . DIRECTORY_SEPARATOR . $this->languages[$this->lang()] . DIRECTORY_SEPARATOR . $CFG->item('general_lang_file');
             if (($found = file_exists($file)) === FALSE) {
                 $this->create_lang_file($file);
             }
@@ -286,21 +286,21 @@ class MY_Lang extends CI_Lang {
         }
 
         // Load the base file, so any others found can override it
-        $basepath = BASEPATH . 'language/' . $idiom . '/' . $langfile;
+        $basepath = BASEPATH . 'language' . DIRECTORY_SEPARATOR . $idiom . DIRECTORY_SEPARATOR . $langfile;
         if (($found = file_exists($basepath)) === TRUE) {
             include($basepath);
         }
 
         // Do we have an alternative path to look in?
         if ($alt_path !== '') {
-            $alt_path .= 'language/' . $idiom . '/' . $langfile;
+            $alt_path .= 'language' . DIRECTORY_SEPARATOR . $idiom . DIRECTORY_SEPARATOR . $langfile;
             if (file_exists($alt_path)) {
                 include($alt_path);
                 $found = TRUE;
             }
         } else {
             foreach (get_instance()->load->get_package_paths(TRUE) as $package_path) {
-                $package_path .= 'language/' . $idiom . '/' . $langfile;
+                $package_path .= 'language' . DIRECTORY_SEPARATOR . $idiom . DIRECTORY_SEPARATOR . $langfile;
                 if ($basepath !== $package_path && file_exists($package_path)) {
                     include($package_path);
                     $found = TRUE;
@@ -309,16 +309,16 @@ class MY_Lang extends CI_Lang {
             }
         }
         if ($found !== TRUE) {
-            log_message('error', 'Unable to load the requested language file: language/' . $idiom . '/' . $langfile);
+            log_message('error', 'Unable to load the requested language file: language' . DIRECTORY_SEPARATOR . $idiom . DIRECTORY_SEPARATOR . $langfile);
             global $CFG;
-            $file = APPPATH . 'language/' . $this->languages[$this->lang()] . '/' . $CFG->item('general_lang_file');
+            $file = APPPATH . 'language' . DIRECTORY_SEPARATOR . $this->languages[$this->lang()] . DIRECTORY_SEPARATOR . $CFG->item('general_lang_file');
             $this->create_lang_file($file);
             echo $file;
             require($file);
         }
 
         if (!isset($lang) OR ! is_array($lang)) {
-            log_message('error', 'Language file contains no data: language/' . $idiom . '/' . $langfile);
+            log_message('error', 'Language file contains no data: language' . DIRECTORY_SEPARATOR . $idiom . DIRECTORY_SEPARATOR . $langfile);
 
             if ($return === TRUE) {
                 return array();
@@ -333,7 +333,7 @@ class MY_Lang extends CI_Lang {
         $this->is_loaded[$langfile] = $idiom;
         $this->language = array_merge($this->language, $lang);
 
-        log_message('info', 'Language file loaded: language/' . $idiom . '/' . $langfile);
+        log_message('info', 'Language file loaded: language' . DIRECTORY_SEPARATOR . $idiom . DIRECTORY_SEPARATOR . $langfile);
         return TRUE;
     }
 
