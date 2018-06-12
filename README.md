@@ -52,7 +52,7 @@ In _application/config/routes.php_ add:
     
 Other routing examples:
 
-    $route['^(en|fr)/contact'] = "pages/contact";
+    $route['^(en|ar)/contact'] = "pages/contact";
     $route['^(en|ar)/privacy-policy$'] = "pages/index/privacy_policy";
     $route['^(en|ar)/terms-of-use$'] = "pages/index/terms_of_use";
 
