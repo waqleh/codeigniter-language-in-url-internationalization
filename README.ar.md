@@ -69,6 +69,17 @@ application/config/routes.php
     $route['^(en|ar)/privacy-policy$'] = "pages/index/privacy_policy";
     $route['^(en|ar)/terms-of-use$'] = "pages/index/terms_of_use";
 
+ملاحظة مهمة: تأكد من إضافة أمثلة أخرى قبل المسارات أعلاه:
+
+    $route['^(en|ar)/contact'] = "pages/contact";
+    $route['^(en|ar)/privacy-policy$'] = "pages/index/privacy_policy";
+    $route['^(en|ar)/terms-of-use$'] = "pages/index/terms_of_use";
+    // example: '/en/about' -> use controller 'about'
+    $route['^en/(.+)$'] = "$1";
+    $route['^ar/(.+)$'] = "$1";
+    // '/en' and '/ar' -> use default controller
+    $route['^(en|ar)$'] = $route['default_controller'];
+
 # استعمال
 دعنا نبني صفحة ثنائية اللغة الإنجليزية / العربية.
 

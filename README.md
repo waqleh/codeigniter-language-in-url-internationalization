@@ -56,6 +56,17 @@ Other routing examples:
     $route['^(en|ar)/privacy-policy$'] = "pages/index/privacy_policy";
     $route['^(en|ar)/terms-of-use$'] = "pages/index/terms_of_use";
 
+Important Note: make sure to add other routs before wildcards regular expression routes above:
+
+    $route['^(en|ar)/contact'] = "pages/contact";
+    $route['^(en|ar)/privacy-policy$'] = "pages/index/privacy_policy";
+    $route['^(en|ar)/terms-of-use$'] = "pages/index/terms_of_use";
+    // example: '/en/about' -> use controller 'about'
+    $route['^en/(.+)$'] = "$1";
+    $route['^ar/(.+)$'] = "$1";
+    // '/en' and '/ar' -> use default controller
+    $route['^(en|ar)$'] = $route['default_controller'];
+
 ### Create _Language Files_
 
 - `application/language/english/about_lang.php`
@@ -130,7 +141,7 @@ Other routing examples:
 
 - the root page (`/`) is supposed to be some kind of splash page, without any specific language. However, this can be changed. Read the **No splash page** section below.
 
-- the CodeIgniter `system/core/Config.php` `site_url()` method is overriden in `MY_Config.php`: a language segment can be added (when appropriate) to generated URLs. It is also used by `anchor()`, `form_open()`...
+- the CodeIgniter `system/core/Config.php` `site_url()` method is overridden in `MY_Config.php`: a language segment can be added (when appropriate) to generated URLs. It is also used by `anchor()`, `form_open()`...
 
 - If a key is not found in the language file's array, a file called `strings_lang.php` will be created and the key and value will be added to it. E.g. if `line('xyz')` is not available, `strings_lang.php` will be created and will contain:
 
