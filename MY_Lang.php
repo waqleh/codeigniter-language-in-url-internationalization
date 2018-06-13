@@ -42,6 +42,12 @@ class MY_Lang extends CI_Lang {
      */
     public $default_uri = '';
 
+    /**
+     * default lang file that will be created if it doesn't exist
+     * and will be used to automatically add any missing strings
+     */
+    public $default_lang_file = 'strings.php';
+
     // --------------------------------------------------------------------
 
     /**
@@ -57,7 +63,10 @@ class MY_Lang extends CI_Lang {
 
         global $CFG;
         global $URI;
-        global $RTR;
+
+        if($CFG->item('default_lang_file')){
+            $this->default_lang_file = $CFG->item('default_lang_file');
+        }
 
         $segment = $URI->segment(1);
 
@@ -190,15 +199,14 @@ class MY_Lang extends CI_Lang {
     /**
      * return translation of line (key). If line is not available add it to a general language file
      *
-     * @param   string  $uri    URI
-     * @param   boolean Optional parameters to stop logging unfound lines
+     * @param   string  $line       URI
+     * @param   boolean $log_errors Optional parameters to stop logging not found lines ### UNUSED ###
      * @return  string
      */
     function line($line = '', $log_errors = TRUE) {
         $value = ($line == '' OR ! isset($this->language[$line])) ? FALSE : $this->language[$line];
         if ($value === FALSE) {
-            global $CFG;
-            $file = APPPATH . 'language' . DIRECTORY_SEPARATOR . $this->languages[$this->lang()] . DIRECTORY_SEPARATOR . $CFG->item('general_lang_file');
+            $file = APPPATH . 'language' . DIRECTORY_SEPARATOR . $this->languages[$this->lang()] . DIRECTORY_SEPARATOR . $this->default_lang_file;
             if (($found = file_exists($file)) === FALSE) {
                 $this->create_lang_file($file);
             }
@@ -310,8 +318,7 @@ class MY_Lang extends CI_Lang {
         }
         if ($found !== TRUE) {
             log_message('error', 'Unable to load the requested language file: language' . DIRECTORY_SEPARATOR . $idiom . DIRECTORY_SEPARATOR . $langfile);
-            global $CFG;
-            $file = APPPATH . 'language' . DIRECTORY_SEPARATOR . $this->languages[$this->lang()] . DIRECTORY_SEPARATOR . $CFG->item('general_lang_file');
+            $file = APPPATH . 'language' . DIRECTORY_SEPARATOR . $this->languages[$this->lang()] . DIRECTORY_SEPARATOR . $this->default_lang_file;
             $this->create_lang_file($file);
             echo $file;
             require($file);
