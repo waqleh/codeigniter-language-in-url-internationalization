@@ -225,7 +225,8 @@ class MY_Lang extends CI_Lang {
         try {
             file_put_contents($file, "<?php
 
-          defined('BASEPATH') OR exit('No direct script access allowed');" . PHP_EOL);
+          defined('BASEPATH') OR exit('No direct script access allowed');
+          \$lang = array();" . PHP_EOL);
         } catch (Exception $exc) {
             log_message('error', 'Could not create lang file: "' . $file . '"');
         }
