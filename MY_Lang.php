@@ -46,7 +46,7 @@ class MY_Lang extends CI_Lang {
      * default lang file that will be created if it doesn't exist
      * and will be used to automatically add any missing strings
      */
-    public $default_lang_file = 'strings_lang.php';
+    public $default_lang_file = 'generated_lang.php';
 
     // --------------------------------------------------------------------
 
